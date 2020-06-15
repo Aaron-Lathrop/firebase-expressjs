@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <title>true facts.</title>
+</head>
+
+<body>
+    <h1>true facts.</h1>
+
+    <ul>
+        {{log facts}}
+        {{#each facts}}
+        <li>{{this}}</li>
+        {{else}}
+        <li>No content</li>
+        {{/each}}
+        <li><input id="add-fact" type="text" /><input type="submit" value="Submit" onclick="addFact()"></li>
+    </ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        function addFact() {
+            const fact = document.getElementById('add-fact').value;
+            if (fact) {
+                axios.post('/add-fact', { fact })
+                    .then(response => {
+                        console.log(response);
+                        return;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        throw new Error(error);
+                    });
+
+                document.getElementById('add-fact').value = "";
+            }
+        }
+    </script>
+</body>
+
+</html>
